@@ -40,6 +40,12 @@ def on_connect_player(data):
 @socketio.on("player_answer")
 def on_player_answer(data):
     emit("answer_update", data, broadcast=True)
+@app.route("/players")
 
+def players():
+    db = get_db()
+    players = db.execute("SELECT * FROM players").fetchall()
+    return render_template("players.html", players=players)
+    
 if __name__ == "__main__":
     socketio.run(app, host="0.0.0.0", port=5000)
