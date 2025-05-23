@@ -1,0 +1,8 @@
+backend/db/quiz.db
+backend/venv/
+backend/static/uploads/
+__pycache__/
+*.pyc
+.idea/
+.vscode/
+.DS_Store
