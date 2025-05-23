@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Oyuncular{% endblock %}
+{% block content %}
+    <h2>Bağlı Oyuncular</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Oyuncu ID</th>
+                <th>Takım</th>
+                <th>Bağlantı</th>
+                <th>Son Cevap</th>
+                <th>Doğru</th>
+                <th>Yanlış</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for player in players %}
+            <tr>
+                <td>{{ player['esp32_id'] }}</td>
+                <td>{{ player['team_id'] }}</td>
+                <td>{{ player['status'] }}</td>
+                <td>{{ player['last_answer'] }}</td>
+                <td>{{ player['correct_count'] }}</td>
+                <td>{{ player['wrong_count'] }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a href="/" class="btn btn-link mt-3">Ana Sayfa</a>
+{% endblock %}
