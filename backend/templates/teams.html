@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Takım Yönetimi{% endblock %}
+{% block content %}
+  <h2>Takımlar</h2>
+  <form method="post" class="mb-3">
+    <div class="input-group mb-2">
+      <input type="text" name="name" class="form-control" placeholder="Takım Adı" required>
+      <input type="color" name="color" class="form-control form-control-color" value="#000000" title="Takım Rengi">
+      <button type="submit" class="btn btn-primary">Ekle</button>
+    </div>
+  </form>
+  <ul class="list-group">
+    {% for team in teams %}
+      <li class="list-group-item">
+        <span style="display:inline-block;width:20px;height:20px;background:{{team.color}};border:1px solid #888;margin-right:8px"></span>
+        {{ team.name }}
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}
