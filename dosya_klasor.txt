@@ -1,0 +1,33 @@
+quizpi/
+├── backend/
+│   ├── app.py
+│   ├── config.py
+│   ├── init_db.py
+│   ├── requirements.txt
+│   ├── db/
+│   │   ├── quiz.db
+│   │   └── schema.sql
+│   ├── static/
+│   │   └── uploads/
+│   │       └── pptx_media/
+│   ├── templates/
+│   │   ├── base.html
+│   │   ├── index.html
+│   │   ├── categories.html
+│   │   ├── teams.html
+│   │   ├── manage_players.html
+│   │   ├── question_form.html
+│   │   ├── questions.html
+│   │   ├── import_questions.html
+│   │   └── import_pptx.html
+│   └── tools/
+│       ├── pptx2quiz_db.py
+│       └── powerpoint_kullanim_rehberi.txt
+├── esp32/
+│   └── [ESP32 kodları ve devre şeması, örnek pin bağlantıları]
+├── scripts/
+│   ├── install_on_rpi.sh
+│   └── start_server.sh
+├── README.md
+├── esp32_baglanti_rehberi.txt
+└── .gitignore
