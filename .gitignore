@@ -1,8 +1,39 @@
-backend/db/quiz.db
-backend/venv/
-backend/static/uploads/
+# Python
 __pycache__/
 *.pyc
-.idea/
+*.pyo
+*.pyd
+env/
+venv/
+ENV/
+*.sqlite3
+*.db
+
+# Flask
+instance/
+.webassets-cache
+
+# VSCode
 .vscode/
+
+# MacOS
 .DS_Store
+
+# Jupyter
+.ipynb_checkpoints
+
+# Medya yükleme dizinleri
+backend/static/uploads/
+!backend/static/uploads/.gitkeep
+
+# pptx geçici dosyaları
+~$*.pptx
+
+# Logs
+*.log
+
+# Node
+node_modules/
+
+# IDE
+.idea/
