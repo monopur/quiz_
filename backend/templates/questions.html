@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %}Sorular{% endblock %}
+{% block content %}
+  <h2>Sorular Listesi</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Kategori</th>
+        <th>Soru</th>
+        <th>Zorluk</th>
+        <th>Puan</th>
+        <th>Süre</th>
+        <th>Medya</th>
+        <th>Doğru Şık</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for q in questions %}
+      <tr>
+        <td>{{ q.id }}</td>
+        <td>
+          {% for c in categories %}
+            {% if c.id == q.category_id %}
+              {{ c.name }}
+            {% endif %}
+          {% endfor %}
+        </td>
+        <td>{{ q.question_text }}</td>
+        <td>{{ q.difficulty }}</td>
+        <td>{{ q.points }}</td>
+        <td>{{ q.duration }}</td>
+        <td>
+          {% if q.image_path %}
+            <a href="/uploads/{{ q.image_path }}" target="_blank">Resim</a>
+          {% endif %}
+          {% if q.audio_path %}
+            <a href="/uploads/{{ q.audio_path }}" target="_blank">Ses</a>
+          {% endif %}
+          {% if q.video_path %}
+            <a href="/uploads/{{ q.video_path }}" target="_blank">Video</a>
+          {% endif %}
+        </td>
+        <td>{{ q.correct_option }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
