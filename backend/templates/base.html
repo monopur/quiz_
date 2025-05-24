@@ -7,7 +7,19 @@
     {% block head %}{% endblock %}
 </head>
 <body>
-    <div class="container mt-5">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">Quiz Sistemi</a>
+        <div>
+          <a class="nav-link d-inline" href="/categories">Kategoriler</a>
+          <a class="nav-link d-inline" href="/questions/new">Soru Ekle</a>
+          <a class="nav-link d-inline" href="/questions/import">CSV ile Aktar</a>
+          <a class="nav-link d-inline" href="/teams">Takımlar</a>
+          <a class="nav-link d-inline" href="/players/manage">Oyuncular</a>
+        </div>
+      </div>
+    </nav>
+    <div class="container mt-2">
         {% block content %}{% endblock %}
     </div>
 </body>
