@@ -1,13 +1,10 @@
 import os
 import sqlite3
 import csv
-import traceback
-from werkzeug.utils import secure_filename
-from tools.pptx2quiz_db import pptx_to_db_with_result
 from io import TextIOWrapper
 from flask import (
     Flask, render_template, request, redirect, url_for,
-    send_from_directory, jsonify
+    send_from_directory, jsonify, flash
 )
 from flask_socketio import SocketIO, emit
 from werkzeug.utils import secure_filename
@@ -121,6 +118,9 @@ def import_questions():
     db = get_db()
     if request.method == "POST":
         file = request.files["csvfile"]
+        if not file or not file.filename.endswith(".csv"):
+            flash("Geçerli bir CSV dosyası seçmelisiniz.", "danger")
+            return redirect(url_for("import_questions"))
         reader = csv.DictReader(TextIOWrapper(file, "utf-8"))
         for row in reader:
             db.execute(
@@ -134,35 +134,13 @@ def import_questions():
                 )
             )
         db.commit()
+        flash("Sorular başarıyla yüklendi.", "success")
         return redirect(url_for("questions"))
     return render_template("import_questions.html")
 
-# Websocket ile ESP32 oyuncu bağlantısı
-@socketio.on("connect_player")
-def on_connect_player(data):
-    emit("player_connected", {"status": "ok"}, broadcast=True)
+# PowerPoint'ten doğrudan toplu aktarım ve sonuç/hata raporu
+from tools.pptx2quiz_db import pptx_to_db_with_result
 
-@socketio.on("player_answer")
-def on_player_answer(data):
-    emit("answer_update", data, broadcast=True)
-from tools.pptx2quiz import main as pptx2quiz_main
-
-@app.route("/questions/import_pptx", methods=["GET", "POST"])
-
-def import_pptx():
-    if request.method == "POST":
-        pptxfile = request.files["pptxfile"]
-        if pptxfile and pptxfile.filename.endswith(".pptx"):
-            upload_path = os.path.join("uploads", pptxfile.filename)
-            pptxfile.save(upload_path)
-            pptx2quiz_main(upload_path)  # CSV ve medya dosyalarını çıkarır
-            # Şimdi CSV ve medya dosyalarını içeri aktar
-            # (import_questions fonksiyonunu kullanabilirsin)
-            flash("PowerPoint içeriği aktarıldı, CSV ve medya hazır!", "success")
-            return redirect(url_for("questions"))
-        else:
-            flash("Geçerli bir PPTX dosyası seçin.", "danger")
-    return render_template("import_pptx.html")
 @app.route("/questions/import_pptx", methods=["GET", "POST"])
 def import_pptx():
     result = None
@@ -174,9 +152,9 @@ def import_pptx():
                 os.makedirs(upload_dir, exist_ok=True)
                 file_path = os.path.join(upload_dir, secure_filename(pptxfile.filename))
                 pptxfile.save(file_path)
-                # pptx_to_db_with_result fonksiyonu, dosya yolunu alır, işleme sonucunu ve hataları döndürür
                 result = pptx_to_db_with_result(file_path)
             except Exception as e:
+                import traceback
                 result = {
                     "success": False,
                     "message": f"Sunucu hatası: {e}",
@@ -189,6 +167,15 @@ def import_pptx():
                 "errors": []
             }
     return render_template("import_pptx.html", result=result)
-    
+
+# Websocket ile ESP32 oyuncu bağlantısı (örnek)
+@socketio.on("connect_player")
+def on_connect_player(data):
+    emit("player_connected", {"status": "ok"}, broadcast=True)
+
+@socketio.on("player_answer")
+def on_player_answer(data):
+    emit("answer_update", data, broadcast=True)
+
 if __name__ == "__main__":
     socketio.run(app, host="0.0.0.0", port=5000)
