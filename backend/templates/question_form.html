@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}Yeni Soru Ekle{% endblock %}
+{% block content %}
+  <h2>Yeni Soru Ekle</h2>
+  <form method="post" enctype="multipart/form-data">
+    <div class="mb-2">
+      <label>Kategori:</label>
+      <select name="category_id" class="form-control" required>
+        {% for cat in categories %}
+          <option value="{{ cat.id }}">{{ cat.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="mb-2"><label>Soru:</label><input type="text" name="question_text" class="form-control" required></div>
+    <div class="mb-2"><label>Resim:</label><input type="file" name="image" accept="image/*"></div>
+    <div class="mb-2"><label>Ses:</label><input type="file" name="audio" accept="audio/*"></div>
+    <div class="mb-2"><label>Video:</label><input type="file" name="video" accept="video/*"></div>
+    <div class="mb-2"><label>A:</label><input type="text" name="option_a" required></div>
+    <div class="mb-2"><label>B:</label><input type="text" name="option_b" required></div>
+    <div class="mb-2"><label>C:</label><input type="text" name="option_c" required></div>
+    <div class="mb-2"><label>D:</label><input type="text" name="option_d" required></div>
+    <div class="mb-2"><label>Doğru Şık:</label>
+      <select name="correct_option" required>
+        <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
+      </select>
+    </div>
+    <div class="mb-2"><label>Zorluk:</label>
+      <select name="difficulty">
+        <option value="kolay">Kolay</option>
+        <option value="orta" selected>Orta</option>
+        <option value="zor">Zor</option>
+      </select>
+    </div>
+    <div class="mb-2"><label>Puan:</label><input type="number" name="points" value="10"></div>
+    <div class="mb-2"><label>Süre (sn):</label><input type="number" name="duration" value="20"></div>
+    <button type="submit" class="btn btn-success">Kaydet</button>
+    <a href="/" class="btn btn-secondary">Vazgeç</a>
+  </form>
+{% endblock %}
