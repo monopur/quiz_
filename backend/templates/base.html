@@ -14,12 +14,23 @@
           <a class="nav-link d-inline" href="/categories">Kategoriler</a>
           <a class="nav-link d-inline" href="/questions/new">Soru Ekle</a>
           <a class="nav-link d-inline" href="/questions/import">CSV ile Aktar</a>
+          <a class="nav-link d-inline" href="/questions/import_pptx">PowerPoint'ten Aktar</a>
           <a class="nav-link d-inline" href="/teams">Takımlar</a>
           <a class="nav-link d-inline" href="/players/manage">Oyuncular</a>
         </div>
       </div>
     </nav>
     <div class="container mt-2">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Kapat"></button>
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
         {% block content %}{% endblock %}
     </div>
 </body>
