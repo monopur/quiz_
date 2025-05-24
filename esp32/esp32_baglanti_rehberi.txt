@@ -1,7 +1,7 @@
 ESP32 Donanım Bağlantı ve Buton Tasarım Rehberi
 
 1) Gerekli Malzemeler
-- 1x ESP32 Dev Kit board
+- 1x ESP32 Dev Kit kartı
 - 1x Taktik buton (push button)
 - 1x 220-470 Ohm direnç (pull-down için)
 - 1x LED (isteğe bağlı, cevap verildiğinde yanması için)
@@ -11,14 +11,14 @@ ESP32 Donanım Bağlantı ve Buton Tasarım Rehberi
 2) Temel Bağlantı Şeması
 
 Butonun bir ucu GND'ye, diğer ucu ESP32'nin dijital pinlerinden birine (ör: GPIO 0) bağlanır.
-Buton ile GND arasında 220-470 Ohm direnç olursa daha güvenli olur.
-LED, başka bir pine (ör: GPIO 2) ve GND'ye 220 Ohm dirençle bağlanabilir.
+Buton ile GND arasında 220-470 Ohm direnç olması önerilir (pull-down).
+LED, başka bir pine (ör: GPIO 2) ve GND'ye, araya 220 Ohm direnç konarak bağlanabilir.
 
 Bağlantı Tablosu:
 | ESP32 Pin | Özellik   | Ne Bağlanacak           |
 |-----------|-----------|-------------------------|
-| 3V3       | Güç       | Breadboard + Hattı      |
-| GND       | Toprak    | Breadboard - Hattı      |
+| 3V3       | Güç       | Breadboard + hattı      |
+| GND       | Toprak    | Breadboard - hattı      |
 | GPIO 0    | Buton     | Butonun bir ucu         |
 | GND       | Buton     | Butonun diğer ucu       |
 | GPIO 2    | LED (+)   | LED Anodu (uzun bacak)  |
@@ -32,10 +32,12 @@ Bağlantı Tablosu:
 
 4) Pil veya USB ile beslenebilir. Geliştirme için USB önerilir.
 
-5) Kod ve bağlantı örnekleri için esp32 klasörüne göz atın.
+5) Kodda debouncing (zıplama önleme) için yazılım filtresi kullanabilirsiniz.  
+Örnek kodlar ve bağlantı şeması için `esp32/` klasörüne göz atın.
 
-6) Birden fazla buton/oyuncu için her ESP32'ye ayrı ID verin ve farklı pinler kullanabilirsiniz.
+6) Birden fazla oyuncu için her ESP32'ye ayrı bir ID verin.
 
 İPUÇLARI:
-- Butonun zıplamasını (debounce) yazılımda çözmeyi unutmayın.
 - ESP32 devresini kutulandırmak, taşımada ve yarışmada avantaj sağlar.
+- Butonun zıplamasını (debounce) yazılımda çözün.
+- Bağlantıların sağlam olduğundan emin olun.
