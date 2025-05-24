@@ -142,6 +142,24 @@ def on_connect_player(data):
 @socketio.on("player_answer")
 def on_player_answer(data):
     emit("answer_update", data, broadcast=True)
+from tools.pptx2quiz import main as pptx2quiz_main
 
+@app.route("/questions/import_pptx", methods=["GET", "POST"])
+
+def import_pptx():
+    if request.method == "POST":
+        pptxfile = request.files["pptxfile"]
+        if pptxfile and pptxfile.filename.endswith(".pptx"):
+            upload_path = os.path.join("uploads", pptxfile.filename)
+            pptxfile.save(upload_path)
+            pptx2quiz_main(upload_path)  # CSV ve medya dosyalarını çıkarır
+            # Şimdi CSV ve medya dosyalarını içeri aktar
+            # (import_questions fonksiyonunu kullanabilirsin)
+            flash("PowerPoint içeriği aktarıldı, CSV ve medya hazır!", "success")
+            return redirect(url_for("questions"))
+        else:
+            flash("Geçerli bir PPTX dosyası seçin.", "danger")
+    return render_template("import_pptx.html")
+    
 if __name__ == "__main__":
     socketio.run(app, host="0.0.0.0", port=5000)
