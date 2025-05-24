@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}PowerPoint'ten Soru Aktarımı{% endblock %}
+{% block content %}
+  <h2>PPTX ile Toplu Soru Yükle</h2>
+  <form method="post" enctype="multipart/form-data">
+    <label>PowerPoint Dosyası (.pptx):</label>
+    <input type="file" name="pptxfile" accept=".pptx" required>
+    <button type="submit" class="btn btn-success">Yükle & Aktar</button>
+  </form>
+  <p>Her slayt bir soru olarak aktarılır. Not alanında: <br>
+  <code>Doğru: A<br>Kategori: Matematik<br>Zorluk: Kolay</code> gibi yazmalısınız.</p>
+{% endblock %}
