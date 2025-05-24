@@ -1,6 +1,9 @@
 import os
 import sqlite3
 import csv
+import traceback
+from werkzeug.utils import secure_filename
+from tools.pptx2quiz_db import pptx_to_db_with_result
 from io import TextIOWrapper
 from flask import (
     Flask, render_template, request, redirect, url_for,
@@ -160,6 +163,32 @@ def import_pptx():
         else:
             flash("Geçerli bir PPTX dosyası seçin.", "danger")
     return render_template("import_pptx.html")
+@app.route("/questions/import_pptx", methods=["GET", "POST"])
+def import_pptx():
+    result = None
+    if request.method == "POST":
+        pptxfile = request.files.get("pptxfile")
+        if pptxfile and pptxfile.filename.endswith(".pptx"):
+            try:
+                upload_dir = os.path.join(app.config["UPLOAD_FOLDER"], "pptx_uploads")
+                os.makedirs(upload_dir, exist_ok=True)
+                file_path = os.path.join(upload_dir, secure_filename(pptxfile.filename))
+                pptxfile.save(file_path)
+                # pptx_to_db_with_result fonksiyonu, dosya yolunu alır, işleme sonucunu ve hataları döndürür
+                result = pptx_to_db_with_result(file_path)
+            except Exception as e:
+                result = {
+                    "success": False,
+                    "message": f"Sunucu hatası: {e}",
+                    "errors": [traceback.format_exc()]
+                }
+        else:
+            result = {
+                "success": False,
+                "message": "Geçerli bir PPTX dosyası seçmelisiniz.",
+                "errors": []
+            }
+    return render_template("import_pptx.html", result=result)
     
 if __name__ == "__main__":
     socketio.run(app, host="0.0.0.0", port=5000)
