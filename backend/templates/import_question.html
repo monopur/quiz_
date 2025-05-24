@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}CSV ile Soru Aktarımı{% endblock %}
+{% block content %}
+  <h2>CSV ile Soru Yükle</h2>
+  <form method="post" enctype="multipart/form-data">
+    <input type="file" name="csvfile" accept=".csv" required>
+    <button type="submit" class="btn btn-success">Yükle</button>
+  </form>
+  <p>CSV başlıkları: category_id, question_text, option_a, option_b, option_c, option_d, correct_option, difficulty, points, duration</p>
+{% endblock %}
