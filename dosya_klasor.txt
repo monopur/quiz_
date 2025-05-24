@@ -31,3 +31,18 @@ quizpi/
 ├── README.md
 ├── esp32_baglanti_rehberi.txt
 └── .gitignore
+
+
+backend/: Web uygulaması, Flask backend ve admin panel kodları.
+app.py: Uygulamanın ana dosyası.
+config.py: Ayar dosyası.
+init_db.py: Veritabanı başlatma aracı.
+db/: SQLite veritabanı ve şeması.
+static/uploads/: Medya dosyalarının yüklendiği dizin.
+templates/: Jinja2 HTML şablonları.
+tools/: Yardımcı araçlar (pptx2quiz_db.py, PowerPoint rehberi).
+esp32/: ESP32 yazılımı, donanım şeması ve bağlantı açıklamaları.
+scripts/: Raspberry Pi için otomatik kurulum ve başlatma scriptleri.
+README.md: Proje genel rehberi, tüm kullanım ve kurulum dökümantasyonu burada.
+esp32_baglanti_rehberi.txt: ESP32 devre bağlantı rehberi (metin olarak, kolay anlaşılır).
+.gitignore: Gereksiz dosyalar için git ignore.
