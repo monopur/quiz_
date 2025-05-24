@@ -1,9 +1,13 @@
 import sqlite3
+import os
 
-with open("db/schema.sql") as f:
+schema_path = os.path.join(os.path.dirname(__file__), "db", "schema.sql")
+db_path = os.path.join(os.path.dirname(__file__), "db", "quiz.db")
+
+with open(schema_path) as f:
     schema = f.read()
 
-con = sqlite3.connect("db/quiz.db")
+con = sqlite3.connect(db_path)
 cur = con.cursor()
 cur.executescript(schema)
 con.commit()
